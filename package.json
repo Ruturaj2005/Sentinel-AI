@@ -1,0 +1,28 @@
+{
+  "name": "sentinel-ubi",
+  "version": "1.0.0",
+  "description": "Sentinel - AI-powered insider fraud detection system for Union Bank of India",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "client": "npm run dev --workspace=client",
+    "server": "npm run dev --workspace=server",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "seed": "node server/src/seeds/index.js",
+    "install:all": "npm install && npm install --workspace=client && npm install --workspace=server"
+  },
+  "keywords": [
+    "fraud-detection",
+    "banking",
+    "security",
+    "insider-threat"
+  ],
+  "author": "Union Bank of India",
+  "license": "PROPRIETARY",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
