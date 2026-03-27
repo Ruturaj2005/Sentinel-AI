@@ -62,7 +62,7 @@ npm run dev
 
 # Or run separately
 npm run client  # Frontend at http://localhost:5173
-npm run server  # Backend at http://localhost:5000
+npm run server  # Backend at http://localhost:5001
 ```
 
 ## Project Structure

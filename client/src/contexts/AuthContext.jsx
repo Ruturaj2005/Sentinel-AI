@@ -34,13 +34,8 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         setLoading(false);
       } else {
-        // Auto-login as employee for demo
-        try {
-          await switchRole(ROLES.EMPLOYEE);
-        } catch (error) {
-          console.error('Auto-login failed:', error);
-          setLoading(false);
-        }
+        // Start unauthenticated on landing page; demo button triggers role session.
+        setLoading(false);
       }
     };
 

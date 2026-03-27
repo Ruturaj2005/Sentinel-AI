@@ -63,15 +63,15 @@ export default function Sidebar() {
   const navigation = ROLE_NAVIGATION[role] || [];
 
   return (
-    <aside className="w-64 bg-white border-r border-neutral-200 min-h-screen">
-      <nav className="p-4 space-y-1">
+    <aside className="w-64 shrink-0 self-start rounded-2xl border border-slate-200/80 bg-white/90 p-3 shadow-sm">
+      <nav className="space-y-1">
         {navigation.map((item, idx) => {
           // Handle divider type
           if (item.type === 'divider') {
             return (
               <div key={`divider-${idx}`} className="pt-4 pb-2">
-                <div className="border-t border-neutral-200 mb-3" />
-                <span className="px-4 text-xs font-semibold text-neutral-400 uppercase tracking-wider">
+                <div className="mb-3 border-t border-slate-200" />
+                <span className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
                   {item.label}
                 </span>
               </div>
@@ -84,10 +84,10 @@ export default function Sidebar() {
               key={item.path}
               to={item.path}
               className={clsx(
-                'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors',
+                'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors',
                 isActive
-                  ? 'bg-primary text-white'
-                  : 'text-neutral-700 hover:bg-neutral-100'
+                  ? 'bg-primary-500 text-white shadow-sm'
+                  : 'text-slate-700 hover:bg-primary-50 hover:text-primary-700'
               )}
             >
               {icons[item.icon]}

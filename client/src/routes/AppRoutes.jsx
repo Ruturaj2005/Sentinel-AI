@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/layout/Layout';
 import Loader from '../components/common/Loader';
+import LandingPage from '../pages/LandingPage';
 
 // Employee pages
 import EmployeeDashboard from '../pages/employee/EmployeeDashboard';
@@ -25,7 +26,7 @@ import NLPTicketScorer from '../pages/investigator/NLPTicketScorer';
 import BaselineComparison from '../pages/investigator/BaselineComparison';
 
 export default function AppRoutes() {
-  const { loading, role } = useAuth();
+  const { loading, role, isAuthenticated } = useAuth();
 
   if (loading) {
     return (
@@ -40,41 +41,83 @@ export default function AppRoutes() {
 
   return (
     <Routes>
-      {/* Root redirect based on role */}
-      <Route
-        path="/"
-        element={<Navigate to={`/${currentRole}/dashboard`} replace />}
-      />
+      {/* Landing page */}
+      <Route path="/" element={<LandingPage />} />
 
       {/* Employee routes */}
       <Route path="/employee">
-        <Route path="dashboard" element={<Layout><EmployeeDashboard /></Layout>} />
-        <Route path="access-history" element={<Layout><MyAccessHistory /></Layout>} />
-        <Route path="tickets" element={<Layout><MyTickets /></Layout>} />
+        <Route
+          path="dashboard"
+          element={isAuthenticated ? <Layout><EmployeeDashboard /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="access-history"
+          element={isAuthenticated ? <Layout><MyAccessHistory /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="tickets"
+          element={isAuthenticated ? <Layout><MyTickets /></Layout> : <Navigate to="/" replace />}
+        />
       </Route>
 
       {/* Manager routes */}
       <Route path="/manager">
-        <Route path="dashboard" element={<Layout><ManagerDashboard /></Layout>} />
-        <Route path="alerts" element={<Layout><TeamAlerts /></Layout>} />
-        <Route path="approvals" element={<Layout><PendingApprovals /></Layout>} />
-        <Route path="team" element={<Layout><TeamOverview /></Layout>} />
+        <Route
+          path="dashboard"
+          element={isAuthenticated ? <Layout><ManagerDashboard /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="alerts"
+          element={isAuthenticated ? <Layout><TeamAlerts /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="approvals"
+          element={isAuthenticated ? <Layout><PendingApprovals /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="team"
+          element={isAuthenticated ? <Layout><TeamOverview /></Layout> : <Navigate to="/" replace />}
+        />
       </Route>
 
       {/* Investigator routes */}
       <Route path="/investigator">
-        <Route path="dashboard" element={<Layout><InvestigatorDashboard /></Layout>} />
-        <Route path="employees" element={<Layout><AllEmployees /></Layout>} />
-        <Route path="alerts" element={<Layout><AllAlerts /></Layout>} />
-        <Route path="tickets" element={<Layout><TicketQueue /></Layout>} />
-        <Route path="patterns" element={<Layout><ReconnaissancePatterns /></Layout>} />
-        <Route path="reports" element={<Layout><Reports /></Layout>} />
-        <Route path="tools/nlp-scorer" element={<Layout><NLPTicketScorer /></Layout>} />
-        <Route path="tools/baseline-comparison" element={<Layout><BaselineComparison /></Layout>} />
+        <Route
+          path="dashboard"
+          element={isAuthenticated ? <Layout><InvestigatorDashboard /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="employees"
+          element={isAuthenticated ? <Layout><AllEmployees /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="alerts"
+          element={isAuthenticated ? <Layout><AllAlerts /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="tickets"
+          element={isAuthenticated ? <Layout><TicketQueue /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="patterns"
+          element={isAuthenticated ? <Layout><ReconnaissancePatterns /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="reports"
+          element={isAuthenticated ? <Layout><Reports /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="tools/nlp-scorer"
+          element={isAuthenticated ? <Layout><NLPTicketScorer /></Layout> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="tools/baseline-comparison"
+          element={isAuthenticated ? <Layout><BaselineComparison /></Layout> : <Navigate to="/" replace />}
+        />
       </Route>
 
       {/* 404 */}
-      <Route path="*" element={<Navigate to={`/${currentRole}/dashboard`} replace />} />
+      <Route path="*" element={<Navigate to={isAuthenticated ? `/${currentRole}/dashboard` : '/'} replace />} />
     </Routes>
   );
 }
